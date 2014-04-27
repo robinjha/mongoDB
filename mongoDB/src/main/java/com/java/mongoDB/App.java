@@ -1,6 +1,7 @@
 package com.java.mongoDB;
 
 import java.net.UnknownHostException;
+import java.util.Set;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -37,6 +38,29 @@ public class App
 				System.out.println(position.next());
 			}
 			
+			BasicDBObject q = new BasicDBObject();
+			q.put("name", "robin");
+			
+			BasicDBObject newDoc = new BasicDBObject();
+			newDoc.put("name", "robin-new");
+			
+			BasicDBObject updatedDoc = new BasicDBObject();
+			updatedDoc.put("$set", newDoc);
+			
+			t.update(q, updatedDoc);
+			
+			BasicDBObject qNew = new BasicDBObject();
+			qNew.put("name", "robin-new");
+			
+			DBCursor position2 = t.find(qNew);
+			
+			while(position2.hasNext()){
+				System.out.println(position2.next());
+			}
+			
+			//delete
+			System.out.println("----DELETING COLLECTION------");
+			t.drop();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
